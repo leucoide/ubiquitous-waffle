@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
             getWindow().setFlags(FLAG_FULLSCREEN,
                     FLAG_FULLSCREEN);
         }
+        findViewById(R.id.surface).setBackgroundColor(ArtNetNode.instance().getColor());
       }
-      findViewById(R.id.surface).setBackgroundColor(ArtNetNode.instance().getColor());
-    }
 }

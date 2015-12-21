@@ -34,7 +34,4 @@ public class ArtNetNode {
         return Color.rgb(this.getR(), this.getG(), this.getB());
     }
 
-
-
-
 }
