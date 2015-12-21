@@ -10,12 +10,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d("NATIVE", this.stringFromJNI());
+        findViewById(R.id.surface).setBackgroundColor(ArtNetNode.instance().getColor());
     }
 
-    public native String stringFromJNI();
 
-    static {
-        System.loadLibrary("thevoicelights");
-    }
 }
