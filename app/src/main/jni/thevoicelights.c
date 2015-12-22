@@ -15,9 +15,9 @@
 
 artnet_node *artnetNode;
 
-int dmxR = 255;
-int dmxG = 100;
-int dmxB = 50;
+int dmxR = 0;
+int dmxG = 0;
+int dmxB = 0;
 
 long random_at_most(long max) {
     unsigned long
