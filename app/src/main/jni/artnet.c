@@ -18,6 +18,10 @@
  * Copyright (C) 2004-2007 Simon Newton
  */
 #include "private.h"
+#include <android/log.h>
+
+#define MODULE_NAME  "THE-VOICE-LIGHTS"
+#define LOGV(...) __android_log_print(ANDROID_LOG_VERBOSE, MODULE_NAME, __VA_ARGS__)
 
 
 
@@ -159,17 +163,24 @@ int artnet_start(artnet_node vn) {
     }
 
     // build the initial reply
-    if ((ret = artnet_tx_build_art_poll_reply(n)))
+    if ((ret = artnet_tx_build_art_poll_reply(n))) {
         return ret;
+    }
 
     if (n->state.node_type == ARTNET_SRV) {
+        // Comentado propositalmente por Felipe Ribeiro
         // poll the network
-        if ((ret = artnet_tx_poll(n, NULL, ARTNET_TTM_AUTO)))
-            return ret;
-
-        if ((ret = artnet_tx_tod_request(n)))
-            return ret;
-    } else {
+//        if ((ret = artnet_tx_poll(n, NULL, ARTNET_TTM_AUTO))) {
+//            LOGV("Entrei aqui 5");
+//            return ret;
+//        }
+//
+//        if ((ret = artnet_tx_tod_request(n))) {
+//            LOGV("Entrei aqui 6");
+//            return ret;
+//        }
+    }
+    else {
         // send a reply on startup
         if ((ret = artnet_tx_poll_reply(n, FALSE)))
             return ret;
@@ -1381,14 +1392,14 @@ int artnet_dump_config(artnet_node vn) {
     node n = (node) vn;
     check_nullnode(vn);
 
-    printf("#### NODE CONFIG ####\n");
-    printf("Node Type: %i\n", n->state.node_type);
-    printf("Short Name: %s\n", n->state.short_name);
-    printf("Long Name: %s\n", n->state.long_name);
-    printf("Subnet: %#02x\n", n->state.subnet);
-    printf("Default Subnet: %#02x\n", n->state.default_subnet);
-    printf("Net Ctl: %i\n", n->state.subnet_net_ctl);
-    printf("#####################\n");
+    LOGV("#### NODE CONFIG ####\n");
+    LOGV("Node Type: %i\n", n->state.node_type);
+    LOGV("Short Name: %s\n", n->state.short_name);
+    LOGV("Long Name: %s\n", n->state.long_name);
+    LOGV("Subnet: %#02x\n", n->state.subnet);
+    LOGV("Default Subnet: %#02x\n", n->state.default_subnet);
+    LOGV("Net Ctl: %i\n", n->state.subnet_net_ctl);
+    LOGV("#####################\n");
 
     return ARTNET_EOK;
 }

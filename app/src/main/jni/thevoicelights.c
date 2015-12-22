@@ -1,9 +1,9 @@
 #include <jni.h>
 #include <time.h>
 #include <stdlib.h>
-#include <android/log.h>
 #include "artnet.h"
 #include "packets.h"
+#include <android/log.h>
 
 #define MODULE_NAME  "THE-VOICE-LIGHTS"
 #define LOGV(...) __android_log_print(ANDROID_LOG_VERBOSE, MODULE_NAME, __VA_ARGS__)
@@ -15,9 +15,9 @@
 
 artnet_node *artnetNode;
 
-int dmxR = 255;
-int dmxG = 100;
-int dmxB = 50;
+int dmxR = 0;
+int dmxG = 0;
+int dmxB = 0;
 
 long random_at_most(long max) {
     unsigned long
@@ -41,16 +41,14 @@ long random_at_most(long max) {
 int receiver(artnet_node node, void *pp, void *d) {
     artnet_packet pack = (artnet_packet) pp;
 
-//    LOGV("Received packet sequence %d\n", pack->data.admx.sequence);
-//
-//    LOGV("Received packet type %d\n", pack->type);
-//
-//    LOGV("Received packet data %s\n", pack->data.admx.data);
+
+
     dmxR = pack->data.admx.data[0];
     dmxG = pack->data.admx.data[1];
     dmxB = pack->data.admx.data[2];
 
     LOGV("Got RGB: ==>  R: %d G: %d B: %d", dmxR, dmxG, dmxB);
+
     return 0;
 }
 
@@ -111,7 +109,9 @@ Java_com_globo_thevoicelights_ArtNetNode_nativeConnect(JNIEnv *env, jobject inst
         return;
     }
 
+
     LOGV("connected!");
+
 
 }
 
@@ -127,5 +127,5 @@ JNIEXPORT void JNICALL
 Java_com_globo_thevoicelights_ArtNetNode_readArtNet(JNIEnv *env, jobject instance) {
 
     artnet_read(artnetNode, 0);
-
+    
 }
