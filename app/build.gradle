@@ -23,6 +23,7 @@ model {
 
     android.ndk {
         moduleName = "thevoicelights"
+        ldLibs.addAll(['android', 'log'])
     }
 
 }

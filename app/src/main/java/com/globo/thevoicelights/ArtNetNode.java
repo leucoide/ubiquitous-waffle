@@ -8,30 +8,32 @@ import android.util.Log;
  */
 public class ArtNetNode {
 
-    private native int getR();
-    private native int getG();
-    private native int getB();
+    private synchronized native int getR();
+    private synchronized native int getG();
+    private synchronized native int getB();
     private native void nativeDisconnect();
-    private native void nativeConnect();
+    private native int nativeConnect();
+    private native void nativePerformBackgroundTask();
 
     private static ArtNetNode _instance;
 
-    private ArtNetNode() {
+    public ArtNetNode() {
     }
 
-    static ArtNetNode instance() {
-        if (_instance == null) {
-            _instance = new ArtNetNode();
-        }
-        return _instance;
-    }
+//    static ArtNetNode instance() {
+//        if (_instance == null) {
+//            _instance = new ArtNetNode();
+//        }
+//        return _instance;
+//    }
 
     static {
         System.loadLibrary("thevoicelights");
     }
 
     public int getColor() {
-        String s = String.format("R %s G %s B %s", this.getR(), this.getG(), this.getB());
+//        String s = String.format("R %s G %s B %s", this.getR(), this.getG(), this.getB());
+//        Log.d("RGB------>" , s);
         return Color.rgb(this.getR(), this.getG(), this.getB());
     }
 
@@ -41,5 +43,9 @@ public class ArtNetNode {
 
     public void close() {
         nativeDisconnect();
+    }
+
+    public void performBackgroundTask(){
+        nativePerformBackgroundTask();
     }
 }
