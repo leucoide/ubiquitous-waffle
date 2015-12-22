@@ -20,6 +20,10 @@
 
 #include "private.h"
 
+#include <android/log.h>
+#define MODULE_NAME  "THE-VOICE-LIGHTS"
+#define LOGV(...) __android_log_print(ANDROID_LOG_VERBOSE, MODULE_NAME, __VA_ARGS__)
+
 uint8_t _make_addr(uint8_t subnet, uint8_t addr);
 
 void check_merge_timeouts(node n, int port);
@@ -767,6 +771,7 @@ void handle_ipprog(node n, artnet_packet p) {
  */
 int handle(node n, artnet_packet p) {
 
+    LOGV("CALLING CALLBACK");
     if (check_callback(n, p, n->callbacks.recv))
         return 0;
 

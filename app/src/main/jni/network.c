@@ -50,6 +50,9 @@ typedef int socklen_t;
 #include <linux/if_packet.h>
 #endif
 
+#include <android/log.h>
+#define MODULE_NAME  "THE-VOICE-LIGHTS"
+#define LOGV(...) __android_log_print(ANDROID_LOG_VERBOSE, MODULE_NAME, __VA_ARGS__)
 
 enum {
     INITIAL_IFACE_COUNT = 10
@@ -425,17 +428,17 @@ int artnet_net_init(node n, const char *preferred_ip) {
     if (n->state.verbose) {
         printf("#### INTERFACES FOUND ####\n");
         for (ift = ift_head; ift != NULL; ift = ift->next) {
-            printf("IP: %s\n", inet_ntoa(ift->ip_addr.sin_addr));
-            printf("  bcast: %s\n", inet_ntoa(ift->bcast_addr.sin_addr));
-            printf("  hwaddr: ");
+            LOGV("IP: %s\n", inet_ntoa(ift->ip_addr.sin_addr));
+            LOGV("  bcast: %s\n", inet_ntoa(ift->bcast_addr.sin_addr));
+            LOGV("  hwaddr: ");
             for (i = 0; i < ARTNET_MAC_SIZE; i++) {
                 if (i)
-                    printf(":");
-                printf("%02x", (uint8_t) ift->hw_addr[i]);
+                    LOGV(":");
+                LOGV("%02x", (uint8_t) ift->hw_addr[i]);
             }
-            printf("\n");
+            LOGV("\n");
         }
-        printf("#########################\n");
+        LOGV("#########################\n");
     }
 
     if (preferred_ip) {

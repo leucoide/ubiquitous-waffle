@@ -11,7 +11,7 @@
 /* #undef HAVE_DOPRNT */
 
 /* Define to 1 if you have the <endian.h> header file. */
-/* #undef HAVE_ENDIAN_H */
+#define HAVE_ENDIAN_H 1
 
 /* Define to 1 if you have the `getifaddrs' function. */
 #define HAVE_GETIFADDRS 1
@@ -26,7 +26,7 @@
 #define HAVE_INTTYPES_H 1
 
 /* Define to 1 if you have the <linux/if_packet.h> header file. */
-/* #undef HAVE_LINUX_IF_PACKET_H */
+#define HAVE_LINUX_IF_PACKET_H 1
 
 /* Define to 1 if your system has a GNU libc compatible `malloc' function, and
    to 0 otherwise. */
@@ -52,7 +52,7 @@
 #define HAVE_SELECT 1
 
 /* define if socket address structures have length fields */
-#define HAVE_SOCKADDR_SA_LEN 1
+//#undef HAVE_SOCKADDR_SA_LEN
 
 /* Define to 1 if you have the `socket' function. */
 #define HAVE_SOCKET 1

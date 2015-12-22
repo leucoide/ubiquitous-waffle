@@ -1,10 +1,13 @@
 package com.globo.thevoicelights;
 
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.SurfaceView;
+import android.view.View;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -29,15 +32,19 @@ public class MainActivity extends AppCompatActivity {
                     FLAG_FULLSCREEN);
         }
         surface = (SurfaceView) findViewById(R.id.surface);
-        node = new ArtNetNode();
 
-        node.connect();
 
-        Timer timer = new Timer();
+//        ArtNetNode.instance().connect();
 
-        MyTimer mt = new MyTimer();
+//        Timer timer = new Timer();
+//
+//        MyTimer mt = new MyTimer();
+//
+//        timer.schedule(mt, 1000, 1000);
+    }
 
-        timer.schedule(mt, 1000, 1000);
+    public void logClick(View view) {
+        Log.d("THE-CLICK", "Clicked");
     }
 
     class MyTimer extends TimerTask {
@@ -54,35 +61,30 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+
     @Override
     protected void onStart() {
         super.onStart();
 
     }
 
-    private void sleep() {
-        try {
-            Thread.sleep(mDelay);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        node.disconnect();
-       // (new ColorService()).execute();
+        ArtNetNode.instance(surface).connect();
+
+//        (new ColorService()).execute();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        node.disconnect();
-        //ArtNetNode.instance().disconnect();
+        ArtNetNode.instance(surface).disconnect();
     }
 
-//    private class ColorService extends AsyncTask<Void,Void,Void>{
+//    private class ColorService extends AsyncTask<Void,Void,Void> {
 //
 //        @Override
 //        protected Void doInBackground(Void... voids) {
@@ -93,7 +95,8 @@ public class MainActivity extends AppCompatActivity {
 //
 //        @Override
 //        protected void onProgressUpdate(Void... values) {
-//            findViewById(R.id.surface).setBackgroundColor(ArtNetNode.instance().getColor());
+////            Log.d("Main", String.format("changing color %d", ArtNetNode.instance().getColor()));
+////            findViewById(R.id.surface).setBackgroundColor(ArtNetNode.instance().getColor());
 //        }
 //    }
 }
