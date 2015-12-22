@@ -1,9 +1,11 @@
 package com.globo.thevoicelights;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.SurfaceView;
@@ -20,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private final Handler handler = new Handler();
     SurfaceView surface = null;
 
-    ArtNetNode node = null;
+    PowerManager.WakeLock wakeLock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,32 +36,9 @@ public class MainActivity extends AppCompatActivity {
         surface = (SurfaceView) findViewById(R.id.surface);
 
 
-//        ArtNetNode.instance().connect();
-
-//        Timer timer = new Timer();
-//
-//        MyTimer mt = new MyTimer();
-//
-//        timer.schedule(mt, 1000, 1000);
     }
 
-    public void logClick(View view) {
-        Log.d("THE-CLICK", "Clicked");
-    }
 
-    class MyTimer extends TimerTask {
-
-        public void run() {
-
-            runOnUiThread(new Runnable() {
-
-                public void run() {
-
-                    surface.setBackgroundColor(node.getColor());
-                }
-            });
-        }
-    }
 
 
 
@@ -73,30 +52,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        PowerManager powerManager = (PowerManager)getSystemService(Context.POWER_SERVICE);
+        this.wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "My Lock");
+        this.wakeLock.acquire();
         ArtNetNode.instance(surface).connect();
 
-//        (new ColorService()).execute();
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        this.wakeLock.release();
         ArtNetNode.instance(surface).disconnect();
+
     }
 
-//    private class ColorService extends AsyncTask<Void,Void,Void> {
-//
-//        @Override
-//        protected Void doInBackground(Void... voids) {
-//            while (true) {
-//                publishProgress();
-//            }
-//        }
-//
-//        @Override
-//        protected void onProgressUpdate(Void... values) {
-////            Log.d("Main", String.format("changing color %d", ArtNetNode.instance().getColor()));
-////            findViewById(R.id.surface).setBackgroundColor(ArtNetNode.instance().getColor());
-//        }
-//    }
+
 }
