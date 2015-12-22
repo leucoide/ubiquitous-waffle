@@ -19,9 +19,7 @@
  */
 #include "private.h"
 
-#include <android/log.h>
-#define MODULE_NAME  "THE-VOICE-LIGHTS"
-#define LOGV(...) __android_log_print(ANDROID_LOG_VERBOSE, MODULE_NAME, __VA_ARGS__)
+
 
 // various constants used everywhere
 int ARTNET_ADDRESS_NO_CHANGE = 0x7f;
@@ -299,8 +297,6 @@ int artnet_read(artnet_node vn, int timeout) {
 
     check_nullnode(vn);
 
-
-
     if (n->state.mode != ARTNET_ON)
         return ARTNET_EACTION;
 
@@ -404,52 +400,40 @@ int artnet_set_handler(artnet_node vn,
 
     switch (handler) {
         case ARTNET_RECV_HANDLER:
-            LOGV("ARTNET_RECV_HANDLER");
             callback = &n->callbacks.recv;
             break;
         case ARTNET_SEND_HANDLER:
             callback = &n->callbacks.send;
-            LOGV("ARTNET_SEND_HANDLER");
             break;
         case ARTNET_POLL_HANDLER:
             callback = &n->callbacks.poll;
-            LOGV("ARTNET_POLL_HANDLER");
             break;
         case ARTNET_REPLY_HANDLER:
             callback = &n->callbacks.reply;
-            LOGV("ARTNET_REPLY_HANDLER");
             break;
         case ARTNET_ADDRESS_HANDLER:
             callback = &n->callbacks.address;
-            LOGV("ARTNET_ADDRESS_HANDLER");
             break;
         case ARTNET_INPUT_HANDLER:
             callback = &n->callbacks.input;
-            LOGV("ARTNET_INPUT_HANDLER");
             break;
         case ARTNET_DMX_HANDLER:
             callback = &n->callbacks.dmx;
-            LOGV("ARTNET_DMX_HANDLER");
             break;
         case ARTNET_TOD_REQUEST_HANDLER:
             callback = &n->callbacks.todrequest;
-            LOGV("ARTNET_TOD_REQUEST_HANDLER");
             break;
         case ARTNET_TOD_DATA_HANDLER:
             callback = &n->callbacks.toddata;
-            LOGV("ARTNET_TOD_DATA_HANDLER");
             break;
         case ARTNET_TOD_CONTROL_HANDLER:
             callback = &n->callbacks.todcontrol;
-            LOGV("ARTNET_TOD_CONTROL_HANDLER");
             break;
         case ARTNET_RDM_HANDLER:
             callback = &n->callbacks.rdm;
-            LOGV("ARTNET_RDM_HANDLER");
             break;
         default:
             artnet_error("%s : Invalid handler defined", __FUNCTION__);
-            LOGV("ARTNET_POLL_HANDLER");
             return ARTNET_EARG;
     }
     callback->fh = fh;

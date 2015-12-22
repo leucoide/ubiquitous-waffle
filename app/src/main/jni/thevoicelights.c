@@ -46,10 +46,11 @@ int receiver(artnet_node node, void *pp, void *d) {
 //    LOGV("Received packet type %d\n", pack->type);
 //
 //    LOGV("Received packet data %s\n", pack->data.admx.data);
-
+    LOGV("callback start");
     dmxR = pack->data.admx.data[0];
     dmxG = pack->data.admx.data[1];
     dmxB = pack->data.admx.data[2];
+    LOGV("callback end");
 //    LOGV("Recebendo o valores %d %d %d", dmxR, dmxG, dmxB);
     return 0;
 }
@@ -79,7 +80,7 @@ JNIEXPORT void JNICALL
 Java_com_globo_thevoicelights_ArtNetNode_nativeConnect(JNIEnv *env, jobject instance) {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     char *ip_addr = NULL;
-    
+
     uint8_t subnet_addr = 0;
     uint8_t port_addr = 1;
 
@@ -105,6 +106,7 @@ Java_com_globo_thevoicelights_ArtNetNode_nativeConnect(JNIEnv *env, jobject inst
 
     artnet_set_handler(artnetNode, ARTNET_RECV_HANDLER, receiver, NULL);
 
+
     if (artnet_start(artnetNode) != 0) {
         return;
     }
@@ -121,7 +123,7 @@ Java_com_globo_thevoicelights_ArtNetNode_nativeDisconnect(JNIEnv *env, jobject i
 
 JNIEXPORT void JNICALL
 Java_com_globo_thevoicelights_ArtNetNode_readArtNet(JNIEnv *env, jobject instance) {
-
-    artnet_read(artnetNode, 1);
-
+    LOGV("read start");
+    artnet_read(artnetNode, 0);
+    LOGV("read end");
 }

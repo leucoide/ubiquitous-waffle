@@ -48,11 +48,12 @@ public class ArtNetNode {
 
     public void connect(){
         this.nativeConnect();
+        this.colorPoll = new ColorPoll();
         this.colorPoll.execute();
     }
     public void disconnect(){
         this.nativeDisconnect();
-        this.colorPoll.cancel(true);
+        this.colorPoll.cancel(false);
     }
     public void print(int color){
         this.view.setBackgroundColor(color);
