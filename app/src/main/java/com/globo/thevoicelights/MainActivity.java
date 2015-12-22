@@ -1,5 +1,7 @@
 package com.globo.thevoicelights;
 
+import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,8 +13,6 @@ import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
 
 public class MainActivity extends AppCompatActivity {
 
-    private int mDelay = 500;
-    private final Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +23,35 @@ public class MainActivity extends AppCompatActivity {
             getWindow().setFlags(FLAG_FULLSCREEN,
                     FLAG_FULLSCREEN);
         }
-        findViewById(R.id.surface).setBackgroundColor(ArtNetNode.instance().getColor());
+
+
       }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ArtNetNode.instance().connect();
+        (new ColorService()).execute();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ArtNetNode.instance().disconnect();
+    }
+
+    private class ColorService extends AsyncTask<Void,Void,Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            while (true) {
+                publishProgress();
+            }
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            findViewById(R.id.surface).setBackgroundColor(ArtNetNode.instance().getColor());
+        }
+    }
 }
