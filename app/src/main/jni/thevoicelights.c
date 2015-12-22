@@ -15,9 +15,9 @@
 
 artnet_node *artnetNode;
 
-int dmxR=255;
-int dmxG=100;
-int dmxB=50;
+int dmxR = 255;
+int dmxG = 100;
+int dmxB = 50;
 
 long random_at_most(long max) {
     unsigned long
@@ -25,17 +25,17 @@ long random_at_most(long max) {
             num_bins = (unsigned long) max + 1,
             num_rand = (unsigned long) RAND_MAX + 1,
             bin_size = num_rand / num_bins,
-            defect   = num_rand % num_bins;
+            defect = num_rand % num_bins;
 
     long x;
     do {
         x = random();
     }
         // This is carefully written not to overflow
-    while (num_rand - defect <= (unsigned long)x);
+    while (num_rand - defect <= (unsigned long) x);
 
     // Truncated division is intentional
-    return x/bin_size;
+    return x / bin_size;
 }
 
 int receiver(artnet_node node, void *pp, void *d) {
@@ -47,10 +47,10 @@ int receiver(artnet_node node, void *pp, void *d) {
 
     LOGV("Received packet data %s\n", pack->data.admx.data);
 
-    dmxR=pack->data.admx.data[0];
-    dmxG=pack->data.admx.data[1];
-    dmxB=pack->data.admx.data[2];
-    LOGV("Recebendo o valores %d %d %d", dmxR,dmxG,dmxB);
+    dmxR = pack->data.admx.data[0];
+    dmxG = pack->data.admx.data[1];
+    dmxB = pack->data.admx.data[2];
+    LOGV("Recebendo o valores %d %d %d", dmxR, dmxG, dmxB);
     return 0;
 }
 
@@ -93,10 +93,10 @@ Java_com_globo_thevoicelights_ArtNetNode_nativeConnect(JNIEnv *env, jobject inst
     artnet_set_short_name(artnetNode, "ANT");
 
     // set the upper 4 bits of the universe address
-    artnet_set_subnet_addr(artnetNode, subnet_addr) ;
+    artnet_set_subnet_addr(artnetNode, subnet_addr);
 
     // enable port 0
-    artnet_set_port_type(artnetNode, 0, ARTNET_ENABLE_OUTPUT, ARTNET_PORT_DMX) ;
+    artnet_set_port_type(artnetNode, 0, ARTNET_ENABLE_OUTPUT, ARTNET_PORT_DMX);
 
     // bind port 0 to universe 1
     artnet_set_port_addr(artnetNode, 0, ARTNET_OUTPUT_PORT, port_addr);
@@ -123,7 +123,8 @@ Java_com_globo_thevoicelights_ArtNetNode_nativeDisconnect(JNIEnv *env, jobject i
 }
 
 JNIEXPORT void JNICALL
-Java_com_globo_thevoicelights_ArtNetNode_nativePerformBackgroundTask(JNIEnv *env, jobject instance) {
+Java_com_globo_thevoicelights_ArtNetNode_nativePerformBackgroundTask(JNIEnv *env,
+                                                                     jobject instance) {
     while (1) {
         artnet_read(artnetNode, 1);
     }

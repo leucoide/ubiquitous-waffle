@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/thevoicelightsandroid.iml" filepath="$PROJECT_DIR$/thevoicelightsandroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/ubiquitous-waffle.iml" filepath="$PROJECT_DIR$/ubiquitous-waffle.iml" />
     </modules>
   </component>

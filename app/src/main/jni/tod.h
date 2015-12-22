@@ -24,22 +24,29 @@
 #include <stdint.h>
 #include "common.h"
 
-enum { ARTNET_TOD_INITIAL_SIZE = 100 };
-enum { ARTNET_TOD_INCREMENT = 50 };
+enum {
+    ARTNET_TOD_INITIAL_SIZE = 100
+};
+enum {
+    ARTNET_TOD_INCREMENT = 50
+};
 
 /*
  * table of devices
  */
 typedef struct {
-  uint8_t *data;
-  int length;
-  int max_length;
+    uint8_t *data;
+    int length;
+    int max_length;
 } tod_t;
 
 
 extern int add_tod_uid(tod_t *tod, uint8_t uid[ARTNET_RDM_UID_WIDTH]);
+
 extern int remove_tod_uid(tod_t *tod, uint8_t uid[ARTNET_RDM_UID_WIDTH]);
+
 extern int flush_tod(tod_t *tod);
+
 extern int reset_tod(tod_t *tod);
 
 #endif

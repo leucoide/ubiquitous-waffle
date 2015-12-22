@@ -25,12 +25,12 @@
  * libartnet error codes
  */
 enum {
-  ARTNET_EOK = 0,
-  ARTNET_ENET = -1, // network error
-  ARTNET_EMEM = -2, // memory error
-  ARTNET_EARG = -3, // argument error
-  ARTNET_ESTATE = -4, // state error
-  ARTNET_EACTION = -5, // invalid action
+    ARTNET_EOK = 0,
+    ARTNET_ENET = -1, // network error
+    ARTNET_EMEM = -2, // memory error
+    ARTNET_EARG = -3, // argument error
+    ARTNET_ESTATE = -4, // state error
+    ARTNET_EACTION = -5, // invalid action
 };
 
 
@@ -38,46 +38,64 @@ enum {
  * The maximum ports per node built into the ArtNet protocol.
  * This is always 4. Don't change it unless you really know what your doing
  */
-enum { ARTNET_MAX_PORTS = 4 };
+enum {
+    ARTNET_MAX_PORTS = 4
+};
 
 /**
  * The length of the short name field. Always 18
  */
-enum { ARTNET_SHORT_NAME_LENGTH = 18 };
+enum {
+    ARTNET_SHORT_NAME_LENGTH = 18
+};
 
 /**
  * The length of the long name field. Always 64
  */
-enum { ARTNET_LONG_NAME_LENGTH = 64 };
+enum {
+    ARTNET_LONG_NAME_LENGTH = 64
+};
 
 /**
  * The length of the report field. Always 64
  */
-enum { ARTNET_REPORT_LENGTH = 64 };
+enum {
+    ARTNET_REPORT_LENGTH = 64
+};
 
 /**
  * The length of the DMX field. Always 512
  */
-enum { ARTNET_DMX_LENGTH = 512 };
+enum {
+    ARTNET_DMX_LENGTH = 512
+};
 
 /*
  * Number of bytes in a RDM UID
  */
-enum { ARTNET_RDM_UID_WIDTH = 6 };
+enum {
+    ARTNET_RDM_UID_WIDTH = 6
+};
 
 /*
  * Length of the hardware address
  */
-enum { ARTNET_MAC_SIZE = 6 };
+enum {
+    ARTNET_MAC_SIZE = 6
+};
 
 /*
  * Length of the ESTA field
  */
-enum { ARTNET_ESTA_SIZE = 2 };
+enum {
+    ARTNET_ESTA_SIZE = 2
+};
 
 /*
  * Length of the IP field
  */
-enum { ARTNET_IP_SIZE = 4 };
+enum {
+    ARTNET_IP_SIZE = 4
+};
 
 #endif

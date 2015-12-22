@@ -37,9 +37,8 @@ public class ArtNetNode {
         return Color.rgb(this.getR(), this.getG(), this.getB());
     }
 
-    public void connect() {
-        nativeConnect();
-    }
+    public void connect(){ this.nativeConnect();}
+    public void disconnect(){ this.nativeDisconnect();}
 
     public void close() {
         nativeDisconnect();

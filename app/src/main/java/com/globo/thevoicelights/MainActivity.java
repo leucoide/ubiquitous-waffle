@@ -4,9 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.SurfaceView;
-import android.view.WindowManager;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -62,22 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private class BackgroundColorTask implements Runnable {
-
-        public void run() {
-
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    for (; ; ) {
-                        surface.setBackgroundColor(node.getColor());
-                        sleep();
-                    }
-                }
-            });
-        }
-    }
-
     private void sleep() {
         try {
             Thread.sleep(mDelay);
@@ -86,4 +68,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        node.disconnect();
+       // (new ColorService()).execute();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        node.disconnect();
+        //ArtNetNode.instance().disconnect();
+    }
+
+//    private class ColorService extends AsyncTask<Void,Void,Void>{
+//
+//        @Override
+//        protected Void doInBackground(Void... voids) {
+//            while (true) {
+//                publishProgress();
+//            }
+//        }
+//
+//        @Override
+//        protected void onProgressUpdate(Void... values) {
+//            findViewById(R.id.surface).setBackgroundColor(ArtNetNode.instance().getColor());
+//        }
+//    }
 }
