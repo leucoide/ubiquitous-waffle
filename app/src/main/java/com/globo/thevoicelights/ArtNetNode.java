@@ -79,9 +79,9 @@ public class ArtNetNode {
             if(!currentColor.equals(values[0])){
                 currentColor = values[0];
                 ArtNetNode.this.print(currentColor);
-                Log.d("THE-", "Changing color");
+//                Log.d("THE-", "Changing color");
             }else {
-                Log.d("THE-", "Not changing color");
+//                Log.d("THE-", "Not changing color");
             }
 
         }

@@ -1,9 +1,9 @@
 #include <jni.h>
 #include <time.h>
 #include <stdlib.h>
-#include <android/log.h>
 #include "artnet.h"
 #include "packets.h"
+#include <android/log.h>
 
 #define MODULE_NAME  "THE-VOICE-LIGHTS"
 #define LOGV(...) __android_log_print(ANDROID_LOG_VERBOSE, MODULE_NAME, __VA_ARGS__)
@@ -46,11 +46,11 @@ int receiver(artnet_node node, void *pp, void *d) {
 //    LOGV("Received packet type %d\n", pack->type);
 //
 //    LOGV("Received packet data %s\n", pack->data.admx.data);
-    LOGV("callback start");
+//    LOGV("callback start");
     dmxR = pack->data.admx.data[0];
     dmxG = pack->data.admx.data[1];
     dmxB = pack->data.admx.data[2];
-    LOGV("callback end");
+//    LOGV("callback end");
 //    LOGV("Recebendo o valores %d %d %d", dmxR, dmxG, dmxB);
     return 0;
 }
@@ -110,8 +110,6 @@ Java_com_globo_thevoicelights_ArtNetNode_nativeConnect(JNIEnv *env, jobject inst
     if (artnet_start(artnetNode) != 0) {
         return;
     }
-
-
 }
 
 JNIEXPORT void JNICALL
@@ -123,7 +121,7 @@ Java_com_globo_thevoicelights_ArtNetNode_nativeDisconnect(JNIEnv *env, jobject i
 
 JNIEXPORT void JNICALL
 Java_com_globo_thevoicelights_ArtNetNode_readArtNet(JNIEnv *env, jobject instance) {
-    LOGV("read start");
+    //LOGV("read start");
     artnet_read(artnetNode, 0);
-    LOGV("read end");
+    //LOGV("read end");
 }
