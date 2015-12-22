@@ -15,6 +15,12 @@ public class MainActivity extends AppCompatActivity {
     private final Handler handler = new Handler();
 
     @Override
+    protected void onStart() {
+        ArtNetNode.instance().connect();
+        super.onStart();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -23,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
             getWindow().setFlags(FLAG_FULLSCREEN,
                     FLAG_FULLSCREEN);
         }
+
+        ArtNetNode.instance().connect();
+
         findViewById(R.id.surface).setBackgroundColor(ArtNetNode.instance().getColor());
       }
 }
