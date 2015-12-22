@@ -41,8 +41,6 @@ public class ArtNetNode {
     }
 
     public int getColor() {
-//        String s = String.format("R %s G %s B %s", this.getR(), this.getG(), this.getB());
-//        Log.d("RGB------>" , s);
         return Color.rgb(this.getR(), this.getG(), this.getB());
     }
 
@@ -54,34 +52,32 @@ public class ArtNetNode {
     public void disconnect(){
         this.nativeDisconnect();
         this.colorPoll.cancel(false);
+
     }
     public void print(int color){
         this.view.setBackgroundColor(color);
     }
     private class ColorPoll extends AsyncTask<Void,Integer,Void>{
 
-        private Integer currentColor = 0;
+        public Integer currentColor = 0;
 
         @Override
         protected Void doInBackground(Void... voids) {
-
-            while(true){
+            while(!isCancelled()){
                 ArtNetNode.this.readArtNet();
                 publishProgress(ArtNetNode.this.getColor());
-            }
 
-//            return null;
+            }
+            return null;
 
         }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
+
             if(!currentColor.equals(values[0])){
                 currentColor = values[0];
                 ArtNetNode.this.print(currentColor);
-                Log.d("THE-", "Changing color");
-            }else {
-                Log.d("THE-", "Not changing color");
             }
 
         }

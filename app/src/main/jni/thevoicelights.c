@@ -46,12 +46,11 @@ int receiver(artnet_node node, void *pp, void *d) {
 //    LOGV("Received packet type %d\n", pack->type);
 //
 //    LOGV("Received packet data %s\n", pack->data.admx.data);
-    LOGV("callback start");
     dmxR = pack->data.admx.data[0];
     dmxG = pack->data.admx.data[1];
     dmxB = pack->data.admx.data[2];
-    LOGV("callback end");
-//    LOGV("Recebendo o valores %d %d %d", dmxR, dmxG, dmxB);
+
+    LOGV("Got RGB: ==>  R: %d G: %d B: %d", dmxR, dmxG, dmxB);
     return 0;
 }
 
@@ -108,9 +107,11 @@ Java_com_globo_thevoicelights_ArtNetNode_nativeConnect(JNIEnv *env, jobject inst
 
 
     if (artnet_start(artnetNode) != 0) {
+        LOGV("not connected!");
         return;
     }
 
+    LOGV("connected!");
 
 }
 
@@ -118,12 +119,13 @@ JNIEXPORT void JNICALL
 Java_com_globo_thevoicelights_ArtNetNode_nativeDisconnect(JNIEnv *env, jobject instance) {
     artnet_stop(artnetNode);
     artnet_destroy(artnetNode);
+    LOGV("disconnected!");
 }
 
 
 JNIEXPORT void JNICALL
 Java_com_globo_thevoicelights_ArtNetNode_readArtNet(JNIEnv *env, jobject instance) {
-    LOGV("read start");
+
     artnet_read(artnetNode, 0);
-    LOGV("read end");
+
 }
