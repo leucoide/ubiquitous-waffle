@@ -7,7 +7,7 @@ model {
 
         defaultConfig.with {
             applicationId = "com.globo.thevoicelights"
-            minSdkVersion.apiLevel = 19
+            minSdkVersion.apiLevel = 9
             targetSdkVersion.apiLevel = 23
             versionCode = 1
             versionName = "1.0"
