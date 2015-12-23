@@ -4,7 +4,7 @@
 #include "artnet.h"
 #include "packets.h"
 #include <android/log.h>
-
+#include <stdbool.h>
 #define MODULE_NAME  "THE-VOICE-LIGHTS"
 #define LOGV(...) __android_log_print(ANDROID_LOG_VERBOSE, MODULE_NAME, __VA_ARGS__)
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, MODULE_NAME, __VA_ARGS__)
@@ -18,12 +18,12 @@ artnet_node *artnetNode;
 int dmxR = 0;
 int dmxG = 0;
 int dmxB = 0;
-
+bool got_first_package = false;
 
 int receiver(artnet_node node, void *pp, void *d) {
     artnet_packet pack = (artnet_packet) pp;
 
-
+    got_first_package = true;
 
     dmxR = pack->data.admx.data[0];
     dmxG = pack->data.admx.data[1];
@@ -110,4 +110,11 @@ Java_com_globo_thevoicelights_ArtNetNode_readArtNet(JNIEnv *env, jobject instanc
 
     artnet_read(artnetNode, 0);
     
+}
+
+JNIEXPORT jboolean JNICALL
+Java_com_globo_thevoicelights_ArtNetNode_gotFirstPackage(JNIEnv *env, jobject instance) {
+
+    return (jboolean) got_first_package;
+
 }
